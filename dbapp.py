@@ -22,6 +22,15 @@ except mysql.connector.Error as err:
         print(err)
 else:
     mysqlCallback()
+    cursor = connection.cursor()
+    queryTerm = "'freon'"
+    query = """SELECT * FROM Dictionary WHERE Expression={queryTerm}""".format(queryTerm=queryTerm)
+    try: 
+        data = cursor.execute(query)
+        for row in cursor:
+            print(json.dumps(row, indent=2))
+    except mysql.connector.Error as err:
+        print(err)
     connection.close()
 
 
