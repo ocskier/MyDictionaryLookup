@@ -1,36 +1,33 @@
-import os, json, mysql.connector
+import tkinter, json, mysql.connector
+from decimal import Decimal
+from tkinter.constants import END
 from mysql.connector import errorcode
-import settings
+from db.connection import connection
 
-
-def mysqlCallback():
-    print('Connected')
-
-try :
-    connection = mysql.connector.connect(
-        user = os.getenv("SQL_USER"),
-        password = os.getenv("SQL_PWD"),
-        host = os.getenv("SQL_HOST"),
-        database = os.getenv("SQL_DB")
-    )
+cursor = connection.cursor()
+queryTerm = "'freon'"
+query = """SELECT * FROM Dictionary WHERE Expression={queryTerm}""".format(queryTerm=queryTerm)
+try: 
+    data = cursor.execute(query)
+    for row in cursor:
+        print(json.dumps(row, indent=2))
 except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Something is wrong with your user name or password")
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
-    else:
-        print(err)
-else:
-    mysqlCallback()
-    cursor = connection.cursor()
-    queryTerm = "'freon'"
-    query = """SELECT * FROM Dictionary WHERE Expression={queryTerm}""".format(queryTerm=queryTerm)
-    try: 
-        data = cursor.execute(query)
-        for row in cursor:
-            print(json.dumps(row, indent=2))
-    except mysql.connector.Error as err:
-        print(err)
-    connection.close()
+    print(err)
+
+window = tkinter.Tk()
+
+e1Val = tkinter.StringVar()
+
+e1 = tkinter.Entry(window, textvariable=e1Val)
+e1.grid(row=0,column=0)
+
+t1 = tkinter.Text(window, height=1, width=20)
+t1.grid(row=0,column=1)
+
+b1 = tkinter.Button(window, text="Search")
+b1.grid(row=0,column=2)
+
+window.mainloop()
+
 
 
