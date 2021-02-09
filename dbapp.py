@@ -1,5 +1,4 @@
 import tkinter, json, mysql.connector
-from decimal import Decimal
 from tkinter.constants import END
 from mysql.connector import errorcode
 from db.connection import connection
