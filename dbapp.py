@@ -23,6 +23,18 @@ def runSearch():
         except mysql.connector.Error as err:
             print(err)
 
+def addEntry():
+    print('adding something to db')
+
+def updateEntry():
+    print('updating something in db')
+
+def deleteEntry():
+    print('deleting something from db')
+
+def close():
+    window.destroy()
+
 l1 = tkinter.Label(window, text='Word: ')
 l1.grid(row=0,column=0)
 
@@ -32,16 +44,16 @@ e1.grid(row=0,column=1)
 b1 = tkinter.Button(window, text="Search",command=runSearch, width=20)
 b1.grid(row=0,column=2)
 
-b2 = tkinter.Button(window, text="Add",command=runSearch, width=20)
+b2 = tkinter.Button(window, text="Add",command=addEntry, width=20)
 b2.grid(row=1,column=2)
 
-b3 = tkinter.Button(window, text="Update",command=runSearch, width=20)
+b3 = tkinter.Button(window, text="Update",command=updateEntry, width=20)
 b3.grid(row=2,column=2)
 
-b4 = tkinter.Button(window, text="Delete",command=runSearch, width=20)
+b4 = tkinter.Button(window, text="Delete",command=deleteEntry, width=20)
 b4.grid(row=3,column=2)
 
-b5 = tkinter.Button(window, text="Close",command=runSearch, width=20)
+b5 = tkinter.Button(window, text="Close",command=close, width=20)
 b5.grid(row=4,column=2)
 
 s1 = ScrolledText(window, width=50, height=5)
