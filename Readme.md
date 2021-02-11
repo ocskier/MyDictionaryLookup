@@ -6,7 +6,7 @@
 
 A Python based application using Tkinter and MySQL to return word definitions
 
-![tkinter window](./assets/CaptureDictionary.png)
+![tkinter window](assets/CaptureDictionary.png)
 
 ## Prerequisites
 
