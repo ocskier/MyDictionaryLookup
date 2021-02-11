@@ -38,7 +38,7 @@ N/A
 
 ## Deployment
 
-[Live Site](N/A)
+N/A
 
 ## Authors
 
