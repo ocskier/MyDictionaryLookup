@@ -32,16 +32,16 @@ e1.grid(row=0,column=1)
 b1 = tkinter.Button(window, text="Search",command=runSearch, width=20)
 b1.grid(row=0,column=2)
 
-b2 = tkinter.Button(window, text="Search",command=runSearch, width=20)
+b2 = tkinter.Button(window, text="Add",command=runSearch, width=20)
 b2.grid(row=1,column=2)
 
-b3 = tkinter.Button(window, text="Search",command=runSearch, width=20)
+b3 = tkinter.Button(window, text="Update",command=runSearch, width=20)
 b3.grid(row=2,column=2)
 
-b4 = tkinter.Button(window, text="Search",command=runSearch, width=20)
+b4 = tkinter.Button(window, text="Delete",command=runSearch, width=20)
 b4.grid(row=3,column=2)
 
-b5 = tkinter.Button(window, text="Search",command=runSearch, width=20)
+b5 = tkinter.Button(window, text="Close",command=runSearch, width=20)
 b5.grid(row=4,column=2)
 
 s1 = ScrolledText(window, width=50, height=5)
