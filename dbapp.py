@@ -4,12 +4,13 @@ from tkinter.scrolledtext import ScrolledText
 from mysql.connector import errorcode
 from db.connection import connection
 
+cursor = connection.cursor()
+
 window = tkinter.Tk()
 
 e1Val = tkinter.StringVar()
 
 def runSearch():
-    cursor = connection.cursor()
     queryTerm = """'{input}'""".format(input=e1Val.get())
     print(queryTerm)
     if queryTerm:
@@ -24,7 +25,15 @@ def runSearch():
             print(err)
 
 def addEntry():
-    print('adding something to db')
+    newExp = e1.get()
+    newDef = s1.get('1.0',END)
+    addQuery = """INSERT INTO Dictionary(Expression,Definition) VALUES ('{exp}','{definition}')""".format(exp=newExp,definition=newDef)
+    try: 
+        data = cursor.execute(addQuery)
+        connection.commit()
+        print("""Added {exp} to the db!""".format(exp=newExp))
+    except mysql.connector.Error as err:
+        print(err)
 
 def updateEntry():
     print('updating something in db')
@@ -33,6 +42,7 @@ def deleteEntry():
     print('deleting something from db')
 
 def close():
+    cursor.close()
     window.destroy()
 
 l1 = tkinter.Label(window, text='Word: ')
