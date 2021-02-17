@@ -32,9 +32,7 @@ pipenv run dbapp.py
 
 ## Running Tests
 
-```bash
 N/A
-```
 
 ## Deployment
 
@@ -46,6 +44,7 @@ N/A
 
 [Jon Jackson](http://github.com/ocskier)
 
+## Contributing
 Please make sure to update tests as appropriate.
 
 ## License
