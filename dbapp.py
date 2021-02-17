@@ -11,16 +11,17 @@ window = tkinter.Tk()
 e1Val = tkinter.StringVar()
 
 def runSearch():
-    queryTerm = """'{input}'""".format(input=e1Val.get())
-    print(queryTerm)
-    if queryTerm:
-        query = """SELECT * FROM Dictionary WHERE Expression={queryTerm}""".format(queryTerm=queryTerm)
-        e1.delete(0,END)
-        s1.delete('1.0',END)
+    queryTerm = e1Val.get()
+    stringQuery = """'{input}'""".format(input=queryTerm)
+    searchQuery = """SELECT * FROM Dictionary WHERE Expression={query}""".format(query=stringQuery)
+    print(searchQuery)
+    if queryTerm.strip():
         try: 
-            data = cursor.execute(query)
+            cursor.execute(searchQuery)
+            e1.delete(0,END)
+            s1.delete('1.0',END)
             for row in cursor:
-                s1.insert('1.0', row[1])
+                s1.insert('1.0', row[2])
         except mysql.connector.Error as err:
             print(err)
 
@@ -28,12 +29,16 @@ def addEntry():
     newExp = e1.get()
     newDef = s1.get('1.0',END)
     addQuery = """INSERT INTO Dictionary(Expression,Definition) VALUES ('{exp}','{definition}')""".format(exp=newExp,definition=newDef)
-    try: 
-        data = cursor.execute(addQuery)
-        connection.commit()
-        print("""Added {exp} to the db!""".format(exp=newExp))
-    except mysql.connector.Error as err:
-        print(err)
+    print(addQuery)
+    if newExp.strip() and newDef.strip():
+        try: 
+            data = cursor.execute(addQuery)
+            connection.commit()
+            print("""Added {exp} to the db!""".format(exp=newExp))
+            e1.delete(0,END)
+            s1.delete('1.0',END)
+        except mysql.connector.Error as err:
+            print(err)
 
 def updateEntry():
     print('updating something in db')
