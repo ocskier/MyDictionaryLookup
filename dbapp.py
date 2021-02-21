@@ -1,7 +1,7 @@
 import tkinter, json
 from tkinter.constants import END
 from tkinter.scrolledtext import ScrolledText
-from db.controller import find,create,end
+from db.controller import find,create,update,end
 
 window = tkinter.Tk()
 
@@ -11,11 +11,9 @@ def runSearch():
     queryTerm = e1Val.get()
     if queryTerm.strip():
         data = find(queryTerm)
-        print(data)
         e1.delete(0,END)
         s1.delete('1.0',END)
         for i in data:
-            print(i[2])
             s1.insert('1.0', i[2])
 
 def addEntry():
@@ -28,7 +26,16 @@ def addEntry():
         s1.delete('1.0',END)
 
 def updateEntry():
-    print('updating something in db')
+    oldExp = e1.get()
+    newExp = "dude"
+    newDef = s1.get('1.0',END).rstrip()
+    if newExp.strip() and newDef.strip():
+        data = update(oldExp,(newExp,newDef))
+        print(data)
+        if(data):
+            print("""Updated {exp} to the db! New definition is {defn}""".format(exp=oldExp, defn=newDef))
+        e1.delete(0,END)
+        s1.delete('1.0',END)
 
 def deleteEntry():
     print('deleting something from db')
