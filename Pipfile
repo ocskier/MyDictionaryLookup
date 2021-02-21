@@ -11,3 +11,6 @@ python-dotenv = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+start="pipenv run python3 dbapp.py"
