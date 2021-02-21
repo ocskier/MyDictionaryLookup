@@ -1,10 +1,7 @@
-import tkinter, json, mysql.connector
+import tkinter, json
 from tkinter.constants import END
 from tkinter.scrolledtext import ScrolledText
-from mysql.connector import errorcode
-from db.connection import connection
-
-cursor = connection.cursor()
+from db.controller import find,create,end
 
 window = tkinter.Tk()
 
@@ -12,33 +9,23 @@ e1Val = tkinter.StringVar()
 
 def runSearch():
     queryTerm = e1Val.get()
-    stringQuery = """'{input}'""".format(input=queryTerm)
-    searchQuery = """SELECT * FROM Dictionary WHERE Expression={query}""".format(query=stringQuery)
-    print(searchQuery)
     if queryTerm.strip():
-        try: 
-            cursor.execute(searchQuery)
-            e1.delete(0,END)
-            s1.delete('1.0',END)
-            for row in cursor:
-                s1.insert('1.0', row[2])
-        except mysql.connector.Error as err:
-            print(err)
+        data = find(queryTerm)
+        print(data)
+        e1.delete(0,END)
+        s1.delete('1.0',END)
+        for i in data:
+            print(i[2])
+            s1.insert('1.0', i[2])
 
 def addEntry():
     newExp = e1.get()
     newDef = s1.get('1.0',END)
-    addQuery = """INSERT INTO Dictionary(Expression,Definition) VALUES ('{exp}','{definition}')""".format(exp=newExp,definition=newDef)
-    print(addQuery)
     if newExp.strip() and newDef.strip():
-        try: 
-            data = cursor.execute(addQuery)
-            connection.commit()
-            print("""Added {exp} to the db!""".format(exp=newExp))
-            e1.delete(0,END)
-            s1.delete('1.0',END)
-        except mysql.connector.Error as err:
-            print(err)
+        data = create(newExp,newDef)
+        print("""Added {exp} to the db! New row id is {id}""".format(id=data, exp=newExp))
+        e1.delete(0,END)
+        s1.delete('1.0',END)
 
 def updateEntry():
     print('updating something in db')
@@ -47,7 +34,7 @@ def deleteEntry():
     print('deleting something from db')
 
 def close():
-    cursor.close()
+    end()
     window.destroy()
 
 l1 = tkinter.Label(window, text='Word: ')
