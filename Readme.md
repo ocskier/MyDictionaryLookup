@@ -18,8 +18,6 @@ pipenv
 
 ## Installation
 
-pipenv install
-
 ```bash
 pipenv install
 ```
@@ -27,7 +25,7 @@ pipenv install
 ## Usage
 
 ```bash
-pipenv run dbapp.py
+pipenv run start
 ```
 
 ## Running Tests

@@ -6,8 +6,8 @@ from .connection import connection
 cursor = connection.cursor()
 
 def find(queryTerm):
-    stringQuery = """'{input}'""".format(input=queryTerm)
-    searchQuery = "SELECT * FROM Dictionary WHERE Expression={query}".format(query=stringQuery)
+    stringQuery = "{input}".format(input=queryTerm)
+    searchQuery = "SELECT * FROM games WHERE Name LIKE '%{query}%'".format(query=stringQuery)
     print(searchQuery)
     try: 
         cursor.execute(searchQuery)
@@ -16,8 +16,10 @@ def find(queryTerm):
     except mysql.connector.Error as err:
         return err
 
-def create(exp,definition):
-    addQuery = "INSERT INTO Dictionary(Expression,Definition) VALUES ('{exp}','{definition}')".format(exp=exp,definition=definition)
+def create(name,genre,platform):
+    addQuery = """INSERT INTO games(Name,Genre,Platform) 
+    VALUES ('{name}','{genre}','{platform}')
+    """.format(name=name,genre=genre,platform=platform)
     print(addQuery)
     try: 
         cursor.execute(addQuery)
@@ -27,11 +29,11 @@ def create(exp,definition):
     except mysql.connector.Error as err:
         return err
 
-def update(exp,updateData):
-    print(exp,updateData)
+def update(name,updateData):
+    print(name,updateData)
     updateQuery = (
-        "Update Dictionary SET Expression='%s',Definition='%s' " 
-        "WHERE Expression='%s'") % (*updateData,exp)
+        "Update games SET User_Score='%s' " 
+        "WHERE Name='%s'") % (*updateData,name)
     print(updateQuery)
     try: 
         cursor.execute(updateQuery)
@@ -41,8 +43,8 @@ def update(exp,updateData):
     except mysql.connector.Error as err:
         return err
 
-def delete(id):
-    deleteQuery = """Delete FROM Dictionary WHERE id={idVal}""".format(idValue=id)
+def delete(name):
+    deleteQuery = """Delete FROM games WHERE Name={name}""".format(name=name)
     print(deleteQuery)
     try: 
         cursor.execute(deleteQuery)
