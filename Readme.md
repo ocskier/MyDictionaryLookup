@@ -1,12 +1,12 @@
-# Dictionary
+# Video Game Lookup
   
   <img style="border-radius: 20px;" src="https://img.shields.io/static/v1?label=LICENSE&message=Apache-2.0&color=BLUE&style=for-the-badge">
 
 <br>
 
-A Python based application using Tkinter and MySQL to return word definitions
+A Python based application using Tkinter and MySQL to interact with top video games database
 
-![tkinter window](assets/CaptureDictionary.png)
+![tkinter window](assets/CaptureTkinter.png)
 
 ## Prerequisites
 
